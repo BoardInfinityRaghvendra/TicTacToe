@@ -78,9 +78,24 @@ const App = ()=>{
            <Row>
                 <Col md={6} className="offset-md-3">
                     
+                    {
+                        winMessage ? (
+                            <div className="mb-2 mt-2 text-center">
+                                <h1 className="text-primary text-uppercase text-center"> Winner is {winMessage}</h1>
+                                <Button color="success" onClick={playAgain}>
+                                       Reset
+                                    </Button>
+                            </div>
+                        )  : (
+                            <h1 className="text-warning  text-center">
+                                {isCross ? "Cross" : "Circle"} 's turn
+                            </h1>
+                        )
+                    }
+
                       <div className="grid">
                       {tictoktoeArray.map((value,index)=>(
-                        <Card onClick={}>
+                        <Card onClick={()=> changeIcon(index)} >
                            <CardBody className="box">
                               <Icon choice={value}/>   
                            </CardBody>
