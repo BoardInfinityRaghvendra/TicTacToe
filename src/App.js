@@ -19,62 +19,78 @@ const App = ()=>{
         tictoktoeArray.fill("")
     }
 
-    const findWinner =({index}) =>{
+    const findWinner =() =>{
         if(tictoktoeArray[0] == tictoktoeArray[1] && 
-            tictoktoeArray[0] == tictoktoeArray[2]){
+            tictoktoeArray[0] == tictoktoeArray[2]
+            && (tictoktoeArray[0] != "")
+            ){
                 setWinMessage(tictoktoeArray[0])
             }
         else if(tictoktoeArray[3] == tictoktoeArray[4] && 
-                tictoktoeArray[3] == tictoktoeArray[5]){
+                tictoktoeArray[3] == tictoktoeArray[5]
+                && (tictoktoeArray[3] != "")
+                ){
                     setWinMessage(tictoktoeArray[3])
             }
         else if(tictoktoeArray[6] == tictoktoeArray[7] && 
-                tictoktoeArray[6] == tictoktoeArray[8]){
+                tictoktoeArray[6] == tictoktoeArray[8]
+                && (tictoktoeArray[6] != "")
+                ){
                     setWinMessage(tictoktoeArray[6])
             }
         else if(tictoktoeArray[0] == tictoktoeArray[3] && 
-            tictoktoeArray[0] == tictoktoeArray[6]){
+            tictoktoeArray[0] == tictoktoeArray[6]
+            && (tictoktoeArray[0] != "")
+            ){
                 setWinMessage(tictoktoeArray[0])
         }
         else if(tictoktoeArray[1] == tictoktoeArray[4] && 
-            tictoktoeArray[1] == tictoktoeArray[5]){
+            tictoktoeArray[1] == tictoktoeArray[5]
+            && (tictoktoeArray[1] != "")
+            ){
                 setWinMessage(tictoktoeArray[1])
         }
         else if(tictoktoeArray[2] == tictoktoeArray[5] && 
-            tictoktoeArray[2] == tictoktoeArray[8]){
+            tictoktoeArray[2] == tictoktoeArray[8]
+            && (tictoktoeArray[2] != "")
+            ){
                 setWinMessage(tictoktoeArray[2])
         }
         else if(tictoktoeArray[0] == tictoktoeArray[4] && 
-            tictoktoeArray[0] == tictoktoeArray[8]){
+            tictoktoeArray[0] == tictoktoeArray[8]
+            && (tictoktoeArray[0] != "")
+            ){
                 setWinMessage(tictoktoeArray[0])
         }
         else if(tictoktoeArray[2] == tictoktoeArray[4] && 
-            tictoktoeArray[2] == tictoktoeArray[6]){
+            tictoktoeArray[2] == tictoktoeArray[6]
+            && (tictoktoeArray[2] != "")
+            ){
                 setWinMessage(tictoktoeArray[2])
         }
     }
 
-    const changeIcon =({index}) =>{
+    const changeIcon =(index) =>{  
           if(winMessage){
             return toast.success("The game has already ended please reload", {
                 position: toast.POSITION.BOTTOM_RIGHT
               });
           } 
-          else if(tictoktoeArray[{index}]== ""){
-              return  isCross? "cross" : "circle"
+          else if(tictoktoeArray[index]== ""){
+            tictoktoeArray[index] = isCross? "cross" : "circle"
+            setIsCross(!isCross)
+             
           }
           else{
-            return toast.success("select a different box", {
-                position: toast.POSITION.BOTTOM_RIGHT
-              }); 
+            return toast("Its already filled", {type: "error"})
           }
-        
+          findWinner()
     }
 
 
     return(
         <Container className="p-5">
-
+             <ToastContainer position="bottom-center"></ToastContainer>
            <Row>
                 <Col md={6} className="offset-md-3">
                     
@@ -95,15 +111,16 @@ const App = ()=>{
 
                       <div className="grid">
                       {tictoktoeArray.map((value,index)=>(
-                        <Card onClick={()=> changeIcon(index)} >
+                        <Card onClick={()=> changeIcon(index) } >
                            <CardBody className="box">
                               <Icon choice={value}/>   
                            </CardBody>
                         </Card>
                       ))}
+                      
                       </div> 
                        
-                    
+                   
                     
                      
                 </Col>
